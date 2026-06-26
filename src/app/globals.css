@@ -535,7 +535,8 @@ h1, h2, h3 {
 .hero-text {
   font-size: clamp(3rem, 5.5vw, 5.5rem);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.2;
+  padding: 0.1em 0;
   letter-spacing: -0.04em;
   background: linear-gradient(135deg, var(--text-1) 0%, var(--accent) 100%);
   -webkit-background-clip: text;
