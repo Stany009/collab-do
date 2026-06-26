@@ -207,7 +207,6 @@ export default function DashboardPage() {
           >
             <option value="light">Light</option>
             <option value="dark">Dark</option>
-            <option value="sweet-peach">Sweet Peach 🍑</option>
           </select>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.4rem 1rem', border: '1px solid var(--border-color)', borderRadius: '6px' }}>
