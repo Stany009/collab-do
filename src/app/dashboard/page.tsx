@@ -243,7 +243,7 @@ export default function DashboardPage() {
       </nav>
 
       {/* MAIN CONTENT AREA */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+
         
         {/* Hero Section */}
         <div className="anim-fade anim-d1" style={{ textAlign: 'center', marginBottom: '3rem', position: 'relative', zIndex: 1 }}>
