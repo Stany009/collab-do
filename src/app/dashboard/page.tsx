@@ -126,36 +126,62 @@ export default function DashboardPage() {
   const addTask = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTaskText.trim() || !activeListId) return;
-    await supabase.from('tasks').insert([{ text: newTaskText, list_id: activeListId }]);
-    setNewTaskText('');
+    const { error } = await supabase.from('tasks').insert([{ text: newTaskText, list_id: activeListId }]);
+    if (error) alert("Error adding task: " + error.message);
+    else {
+      setNewTaskText('');
+      const { data } = await supabase.from('tasks').select('*').eq('list_id', activeListId).order('created_at', { ascending: true });
+      if (data) setTasks(data);
+    }
   };
 
   const toggleTask = async (taskId: string, currentStatus: boolean) => {
-    await supabase.from('tasks').update({ completed: !currentStatus }).eq('id', taskId);
+    const { error } = await supabase.from('tasks').update({ completed: !currentStatus }).eq('id', taskId);
+    if (error) alert("Error updating task: " + error.message);
+    else {
+      const { data } = await supabase.from('tasks').select('*').eq('list_id', activeListId).order('created_at', { ascending: true });
+      if (data) setTasks(data);
+    }
   };
 
   const deleteTask = async (taskId: string) => {
-    await supabase.from('tasks').delete().eq('id', taskId);
+    const { error } = await supabase.from('tasks').delete().eq('id', taskId);
+    if (error) alert("Error deleting task: " + error.message);
+    else {
+      const { data } = await supabase.from('tasks').select('*').eq('list_id', activeListId).order('created_at', { ascending: true });
+      if (data) setTasks(data);
+    }
   };
   
   const deleteList = async (listId: string) => {
     if (window.confirm("Are you sure you want to delete this list?")) {
-        await supabase.from('lists').delete().eq('id', listId);
-        if (activeListId === listId) setActiveListId(null);
+        const { error } = await supabase.from('lists').delete().eq('id', listId);
+        if (error) {
+            console.error("Delete list error:", error);
+            alert("Error deleting list: " + error.message);
+        } else {
+            if (activeListId === listId) setActiveListId(null);
+            const { data } = await supabase.from('lists').select('*').order('created_at', { ascending: true });
+            if (data) setLists(data);
+        }
     }
   }
 
   const handleShareList = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!shareEmail.trim() || !activeListId) return;
-    await supabase.from('list_shares').insert([{ list_id: activeListId, shared_with_email: shareEmail }]);
-    setShareEmail('');
-    fetchSharedUsers();
+    const { error } = await supabase.from('list_shares').insert([{ list_id: activeListId, shared_with_email: shareEmail }]);
+    if (error) alert("Error sharing list: " + error.message);
+    else {
+      setShareEmail('');
+      fetchSharedUsers();
+    }
   };
 
   const handleRemoveShare = async (shareId: string) => {
-    await supabase.from('list_shares').delete().eq('id', shareId);
-    fetchSharedUsers();
+    const { error } = await supabase.from('list_shares').delete().eq('id', shareId);
+    if (error) alert("Error removing share: " + error.message);
+    else fetchSharedUsers();
   };
 
   if (!user) {

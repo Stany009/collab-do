@@ -1,34 +1,3 @@
--- Create the lists table
-CREATE TABLE IF NOT EXISTS lists (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  title TEXT NOT NULL,
-  owner_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
-);
-
--- Create the list_shares table (for collaboration)
-CREATE TABLE IF NOT EXISTS list_shares (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  list_id UUID NOT NULL REFERENCES lists(id) ON DELETE CASCADE,
-  shared_with_email TEXT NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
-  UNIQUE(list_id, shared_with_email)
-);
-
--- Create the tasks table
-CREATE TABLE IF NOT EXISTS tasks (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  list_id UUID NOT NULL REFERENCES lists(id) ON DELETE CASCADE,
-  text TEXT NOT NULL,
-  completed BOOLEAN DEFAULT FALSE NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
-);
-
--- Enable Row Level Security (RLS) on all tables
-ALTER TABLE lists ENABLE ROW LEVEL SECURITY;
-ALTER TABLE list_shares ENABLE ROW LEVEL SECURITY;
-ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
-
 -- Drop ALL old policies to start fresh and avoid conflicts
 DROP POLICY IF EXISTS "Users can manage their own lists" ON lists;
 DROP POLICY IF EXISTS "Users can read shared lists" ON lists;
@@ -109,15 +78,3 @@ CREATE POLICY "Users can delete shares they own" ON list_shares
             AND lists.owner_id = auth.uid()
         )
     );
-
--- Enable Realtime for all tables so clients can listen to changes
-DO $$
-BEGIN
-  IF NOT EXISTS (SELECT 1 FROM pg_publication WHERE pubname = 'supabase_realtime') THEN
-    CREATE PUBLICATION supabase_realtime;
-  END IF;
-END $$;
-
-ALTER PUBLICATION supabase_realtime ADD TABLE lists;
-ALTER PUBLICATION supabase_realtime ADD TABLE tasks;
-ALTER PUBLICATION supabase_realtime ADD TABLE list_shares;
