@@ -25,14 +25,16 @@ export default function LoginPage() {
           password,
         });
         if (error) throw error;
-        alert('Check your email for the confirmation link!');
+        // If email confirmations are off, they might be logged in immediately.
+        // Let's redirect to dashboard just in case, or show an alert if they need to check email.
+        router.push('/dashboard'); 
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
         if (error) throw error;
-        router.push('/dashboard'); // Redirect to dashboard after login
+        router.push('/dashboard');
       }
     } catch (err: any) {
       setError(err.message);
@@ -42,100 +44,78 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      minHeight: '100vh',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '2rem'
-    }}>
-      <div style={{
-        background: 'var(--task-bg)',
-        padding: '2rem',
-        borderRadius: 'var(--border-radius)',
-        boxShadow: 'var(--shadow-md)',
-        width: '100%',
-        maxWidth: '400px'
-      }}>
-        <h1 style={{ textAlign: 'center', marginBottom: '1.5rem', color: 'var(--accent-color)' }}>
+    <div className="flex-center animate-fade-in" style={{ minHeight: '100vh', padding: '2rem' }}>
+      <div className="glass-panel" style={{ padding: '3rem', width: '100%', maxWidth: '420px' }}>
+        
+        <h2 style={{ textAlign: 'center', marginBottom: '2rem', color: 'var(--text-primary)' }}>
           {isSignUp ? 'Create an Account' : 'Welcome Back'}
-        </h1>
+        </h2>
         
         {error && (
           <div style={{
             background: 'var(--danger)',
             color: 'white',
-            padding: '0.75rem',
-            borderRadius: 'var(--border-radius)',
-            marginBottom: '1rem',
-            fontSize: '0.875rem'
+            padding: '1rem',
+            borderRadius: '12px',
+            marginBottom: '1.5rem',
+            fontSize: '0.9rem',
+            fontWeight: '600'
           }}>
             {error}
           </div>
         )}
 
-        <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Email</label>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500', color: 'var(--text-secondary)' }}>
+              Email Address
+            </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                borderRadius: 'var(--border-radius)',
-                border: '1px solid var(--border-color)',
-                background: 'var(--bg-primary)',
-                color: 'var(--text-primary)'
-              }}
+              className="input-field"
+              placeholder="you@example.com"
             />
           </div>
           <div>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Password</label>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500', color: 'var(--text-secondary)' }}>
+              Password
+            </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                borderRadius: 'var(--border-radius)',
-                border: '1px solid var(--border-color)',
-                background: 'var(--bg-primary)',
-                color: 'var(--text-primary)'
-              }}
+              className="input-field"
+              placeholder="••••••••"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            style={{
-              background: 'var(--accent-color)',
-              color: 'white',
-              padding: '0.75rem',
-              borderRadius: 'var(--border-radius)',
-              fontWeight: 'bold',
-              marginTop: '0.5rem',
-              opacity: loading ? 0.7 : 1
-            }}
+            className="btn btn-primary"
+            style={{ marginTop: '0.5rem', padding: '1rem' }}
           >
             {loading ? 'Processing...' : (isSignUp ? 'Sign Up' : 'Log In')}
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.875rem' }}>
-          {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+        <div style={{ textAlign: 'center', marginTop: '2rem', fontSize: '0.9rem' }}>
+          <span style={{ color: 'var(--text-secondary)' }}>
+            {isSignUp ? 'Already have an account?' : "Don't have an account?"}
+          </span>
+          {' '}
           <button
             type="button"
             onClick={() => setIsSignUp(!isSignUp)}
-            style={{ color: 'var(--accent-color)', fontWeight: 'bold' }}
+            className="btn-ghost"
+            style={{ padding: '0.2rem 0.5rem' }}
           >
             {isSignUp ? 'Log In' : 'Sign Up'}
           </button>
-        </p>
+        </div>
       </div>
     </div>
   );
