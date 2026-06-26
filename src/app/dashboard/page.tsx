@@ -242,15 +242,16 @@ export default function DashboardPage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <div className="anim-fade anim-d1" style={{ textAlign: 'center', margin: '3rem 0 4rem' }}>
-        <h1 className="hero-text" style={{ marginBottom: '1rem' }}>
-          Welcome back
-        </h1>
-        <p style={{ color: 'var(--text-2)', fontSize: '1.25rem', maxWidth: '600px', margin: '0 auto' }}>
-          Organize your tasks, collaborate with your team, and get things done in style.
-        </p>
-      </div>
+      {/* MAIN CONTENT AREA */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        
+        {/* Hero Section */}
+        <div className="anim-fade anim-d1" style={{ textAlign: 'center', marginBottom: '3rem', position: 'relative' }}>
+          <h1 className="hero-text" style={{ marginBottom: '0.5rem' }}>Welcome back</h1>
+          <p style={{ color: 'var(--text-2)', fontSize: '1.1rem', maxWidth: '600px' }}>
+            Organize your tasks, collaborate with your team, and get things done in style.
+          </p>
+        </div>
 
       {/* Bento Grid Layout */}
       <div className="bento-grid flex-1">
