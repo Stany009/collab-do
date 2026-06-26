@@ -255,8 +255,8 @@ export default function DashboardPage() {
       {/* Bento Grid Layout */}
       <div className="bento-grid flex-1">
         
-        {/* Left Column: Workspaces */}
-        <div className="glass anim-fade anim-d2" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%', minHeight: '400px' }}>
+        {/* --- LEFT COLUMN: WORKSPACES --- */}
+        <div className="glass anim-fade anim-d2" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>Workspaces</h2>
             <button onClick={() => setIsCreatingList(!isCreatingList)} className="btn-ghost" style={{ padding: '0.4rem', borderRadius: '8px' }}>
