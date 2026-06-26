@@ -405,6 +405,18 @@ h1, h2, h3 {
   transform: translateY(-1px);
 }
 
+.task-card.completed {
+  opacity: 0.5;
+  background: transparent;
+  box-shadow: none;
+}
+
+.task-card.completed:hover {
+  border-color: var(--surface-border);
+  box-shadow: none;
+  transform: none;
+}
+
 .task-check {
   cursor: pointer;
   color: var(--text-3);

@@ -392,7 +392,7 @@ export default function DashboardPage() {
                   </div>
                 )}
                 {tasks.map((task) => (
-                  <div key={task.id} className="task-card group">
+                  <div key={task.id} className={`task-card group ${task.completed ? 'completed' : ''}`}>
                     <button
                       onClick={() => toggleTask(task.id, task.completed)}
                       className={`task-check ${task.completed ? 'checked' : ''}`}
