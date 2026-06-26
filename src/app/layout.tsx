@@ -1,11 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
 import "./globals.css";
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "CollabDo - Shared To-Do Lists",
@@ -18,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="dark" className={`${outfit.variable}`}>
-      <body className={outfit.className}>{children}</body>
+    <html lang="en" data-theme="dark">
+      <body className="overflow-x-hidden w-full max-w-full">{children}</body>
     </html>
   );
 }
