@@ -248,7 +248,7 @@ export default function DashboardPage() {
         {/* Hero Section */}
         <div className="anim-fade anim-d1" style={{ textAlign: 'center', marginBottom: '3rem', position: 'relative', zIndex: 1 }}>
           <h1 className="hero-text" style={{ marginBottom: '0.5rem', pointerEvents: 'none' }}>Welcome back</h1>
-          <p style={{ color: 'var(--text-2)', fontSize: '1.1rem', maxWidth: '600px' }}>
+          <p style={{ color: 'var(--text-2)', fontSize: '1.1rem', maxWidth: '550px', textWrap: 'balance', margin: '0 auto' }}>
             Organize your tasks, collaborate with your team, and get things done in style.
           </p>
         </div>
