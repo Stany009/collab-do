@@ -239,38 +239,68 @@ export default function DashboardPage() {
         </div>
         
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-          <div style={{ display: 'flex', gap: '0.25rem' }}>
+          <div style={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
+             {/* Cute Themes */}
+             <button 
+                onClick={() => handleThemeChange('hello-kitty')}
+                className={`btn-ghost ${theme === 'hello-kitty' ? 'active' : ''}`}
+                style={{ padding: '0.4rem', borderRadius: '50%', background: theme === 'hello-kitty' ? 'var(--border-color)' : 'transparent' }}
+                title="Hello Kitty 🎀"
+             >
+                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #ffe0ec, #fce4ec)', border: '1.5px solid #f48fb1' }} />
+             </button>
+             <button 
+                onClick={() => handleThemeChange('lavender')}
+                className={`btn-ghost ${theme === 'lavender' ? 'active' : ''}`}
+                style={{ padding: '0.4rem', borderRadius: '50%', background: theme === 'lavender' ? 'var(--border-color)' : 'transparent' }}
+                title="Lavender Dream 💜"
+             >
+                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #e8d5f5, #ede7f6)', border: '1.5px solid #ce93d8' }} />
+             </button>
+             <button 
+                onClick={() => handleThemeChange('bubblegum')}
+                className={`btn-ghost ${theme === 'bubblegum' ? 'active' : ''}`}
+                style={{ padding: '0.4rem', borderRadius: '50%', background: theme === 'bubblegum' ? 'var(--border-color)' : 'transparent' }}
+                title="Bubblegum Pop 🍬"
+             >
+                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #f8bbd0, #f3e5f5)', border: '1.5px solid #f48fb1' }} />
+             </button>
+
+             {/* Separator */}
+             <div style={{ width: '1px', height: '16px', background: 'var(--border-color)', margin: '0 0.3rem' }} />
+
+             {/* Minimal Themes */}
              <button 
                 onClick={() => handleThemeChange('dark')}
                 className={`btn-ghost ${theme === 'dark' ? 'active' : ''}`}
-                style={{ padding: '0.5rem', borderRadius: '50%', background: theme === 'dark' ? 'var(--border-color)' : 'transparent' }}
-                title="Midnight"
+                style={{ padding: '0.4rem', borderRadius: '50%', background: theme === 'dark' ? 'var(--border-color)' : 'transparent' }}
+                title="Midnight ✨"
              >
-                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #111827, #0f1219)' }} />
+                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #111827, #0f1219)', border: '1.5px solid #374151' }} />
+             </button>
+             <button 
+                onClick={() => handleThemeChange('ink')}
+                className={`btn-ghost ${theme === 'ink' ? 'active' : ''}`}
+                style={{ padding: '0.4rem', borderRadius: '50%', background: theme === 'ink' ? 'var(--border-color)' : 'transparent' }}
+                title="Ink 🖋️"
+             >
+                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: '#000000', border: '1.5px solid #333' }} />
+             </button>
+             <button 
+                onClick={() => handleThemeChange('snow')}
+                className={`btn-ghost ${theme === 'snow' ? 'active' : ''}`}
+                style={{ padding: '0.4rem', borderRadius: '50%', background: theme === 'snow' ? 'var(--border-color)' : 'transparent' }}
+                title="Snow ❄️"
+             >
+                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)', border: '1.5px solid #cbd5e1' }} />
              </button>
              <button 
                 onClick={() => handleThemeChange('ocean')}
                 className={`btn-ghost ${theme === 'ocean' ? 'active' : ''}`}
-                style={{ padding: '0.5rem', borderRadius: '50%', background: theme === 'ocean' ? 'var(--border-color)' : 'transparent' }}
-                title="Ocean Glass"
+                style={{ padding: '0.4rem', borderRadius: '50%', background: theme === 'ocean' ? 'var(--border-color)' : 'transparent' }}
+                title="Ocean 🌊"
              >
-                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #e0f2fe, #bae6fd)' }} />
-             </button>
-             <button 
-                onClick={() => handleThemeChange('emerald')}
-                className={`btn-ghost ${theme === 'emerald' ? 'active' : ''}`}
-                style={{ padding: '0.5rem', borderRadius: '50%', background: theme === 'emerald' ? 'var(--border-color)' : 'transparent' }}
-                title="Emerald Forest"
-             >
-                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #d1fae5, #a7f3d0)' }} />
-             </button>
-             <button 
-                onClick={() => handleThemeChange('monochrome')}
-                className={`btn-ghost ${theme === 'monochrome' ? 'active' : ''}`}
-                style={{ padding: '0.5rem', borderRadius: '50%', background: theme === 'monochrome' ? 'var(--border-color)' : 'transparent' }}
-                title="Minimal Monochrome"
-             >
-                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #ffffff, #f3f4f6)', border: '1px solid #e5e7eb' }} />
+                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #e0f2fe, #bae6fd)', border: '1.5px solid #7dd3fc' }} />
              </button>
           </div>
           
