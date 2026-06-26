@@ -43,7 +43,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex-center" style={{ minHeight: '100vh', padding: '2rem' }}>
-      <div className="panel" style={{ padding: '3rem', width: '100%', maxWidth: '400px' }}>
+      <div className="panel animate-fade-in-up" style={{ padding: '3rem', width: '100%', maxWidth: '400px' }}>
         
         <h2 style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '1.5rem' }}>
           {isSignUp ? 'Create an Account' : 'Welcome Back'}

@@ -195,7 +195,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="container">
+    <div className="container animate-fade-in-up">
       <header className="flex-between" style={{ padding: '1.5rem 0', marginBottom: '2rem', borderBottom: '1px solid var(--border-color)' }}>
         <h2 style={{ margin: 0, fontWeight: 700 }}>CollabDo</h2>
         
@@ -222,7 +222,7 @@ export default function DashboardPage() {
       <div style={{ display: 'flex', gap: '2rem', minHeight: '70vh', alignItems: 'flex-start' }}>
         
         {/* Sidebar: Lists */}
-        <div style={{ width: '280px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div className="animate-fade-in-up delay-100" style={{ width: '280px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <h3 style={{ margin: 0, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
             My Lists
           </h3>
@@ -270,7 +270,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Main Content: Tasks */}
-        <div style={{ flex: 1 }}>
+        <div className="animate-fade-in-up delay-200" style={{ flex: 1 }}>
           {activeListId ? (
             <>
               <div className="flex-between" style={{ marginBottom: '2rem' }}>
