@@ -195,7 +195,7 @@ export default function DashboardPage() {
     <div className="container" style={{ padding: '2rem', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
       {/* Navbar */}
-      <nav className="navbar anim-fade">
+      <nav className="navbar anim-fade" style={{ position: 'relative', zIndex: 9999 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
           <ListTodo size={22} color="var(--accent)" />
           <span style={{ fontWeight: 700, fontSize: '1.25rem', fontFamily: 'var(--font-playfair), Georgia, serif' }}>CollabDo</span>
@@ -246,8 +246,8 @@ export default function DashboardPage() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         
         {/* Hero Section */}
-        <div className="anim-fade anim-d1" style={{ textAlign: 'center', marginBottom: '3rem', position: 'relative' }}>
-          <h1 className="hero-text" style={{ marginBottom: '0.5rem' }}>Welcome back</h1>
+        <div className="anim-fade anim-d1" style={{ textAlign: 'center', marginBottom: '3rem', position: 'relative', zIndex: 1 }}>
+          <h1 className="hero-text" style={{ marginBottom: '0.5rem', pointerEvents: 'none' }}>Welcome back</h1>
           <p style={{ color: 'var(--text-2)', fontSize: '1.1rem', maxWidth: '600px' }}>
             Organize your tasks, collaborate with your team, and get things done in style.
           </p>
