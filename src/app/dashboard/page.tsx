@@ -25,7 +25,7 @@ export default function DashboardPage() {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [shareEmail, setShareEmail] = useState('');
   const [sharedUsers, setSharedUsers] = useState<any[]>([]);
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('dark');
   
   const router = useRouter();
   const supabase = createClient();
@@ -215,6 +215,7 @@ export default function DashboardPage() {
   const handleThemeChange = (newTheme: string) => {
     setTheme(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
   };
 
   if (!user) {
@@ -239,14 +240,6 @@ export default function DashboardPage() {
         
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
           <div style={{ display: 'flex', gap: '0.25rem' }}>
-             <button 
-                onClick={() => handleThemeChange('light')}
-                className={`btn-ghost ${theme === 'light' ? 'active' : ''}`}
-                style={{ padding: '0.5rem', borderRadius: '50%', background: theme === 'light' ? 'var(--border-color)' : 'transparent' }}
-                title="Sweet Peach"
-             >
-                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #fbd3be, #fdf0e6)' }} />
-             </button>
              <button 
                 onClick={() => handleThemeChange('dark')}
                 className={`btn-ghost ${theme === 'dark' ? 'active' : ''}`}
