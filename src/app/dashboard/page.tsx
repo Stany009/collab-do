@@ -238,11 +238,12 @@ export default function DashboardPage() {
         </div>
         
         <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.25rem' }}>
              <button 
                 onClick={() => handleThemeChange('light')}
                 className={`btn-ghost ${theme === 'light' ? 'active' : ''}`}
                 style={{ padding: '0.5rem', borderRadius: '50%', background: theme === 'light' ? 'var(--border-color)' : 'transparent' }}
+                title="Sweet Peach"
              >
                 <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #fbd3be, #fdf0e6)' }} />
              </button>
@@ -250,8 +251,33 @@ export default function DashboardPage() {
                 onClick={() => handleThemeChange('dark')}
                 className={`btn-ghost ${theme === 'dark' ? 'active' : ''}`}
                 style={{ padding: '0.5rem', borderRadius: '50%', background: theme === 'dark' ? 'var(--border-color)' : 'transparent' }}
+                title="Midnight"
              >
                 <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #111827, #0f1219)' }} />
+             </button>
+             <button 
+                onClick={() => handleThemeChange('ocean')}
+                className={`btn-ghost ${theme === 'ocean' ? 'active' : ''}`}
+                style={{ padding: '0.5rem', borderRadius: '50%', background: theme === 'ocean' ? 'var(--border-color)' : 'transparent' }}
+                title="Ocean Glass"
+             >
+                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #e0f2fe, #bae6fd)' }} />
+             </button>
+             <button 
+                onClick={() => handleThemeChange('emerald')}
+                className={`btn-ghost ${theme === 'emerald' ? 'active' : ''}`}
+                style={{ padding: '0.5rem', borderRadius: '50%', background: theme === 'emerald' ? 'var(--border-color)' : 'transparent' }}
+                title="Emerald Forest"
+             >
+                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #d1fae5, #a7f3d0)' }} />
+             </button>
+             <button 
+                onClick={() => handleThemeChange('monochrome')}
+                className={`btn-ghost ${theme === 'monochrome' ? 'active' : ''}`}
+                style={{ padding: '0.5rem', borderRadius: '50%', background: theme === 'monochrome' ? 'var(--border-color)' : 'transparent' }}
+                title="Minimal Monochrome"
+             >
+                <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'linear-gradient(135deg, #ffffff, #f3f4f6)', border: '1px solid #e5e7eb' }} />
              </button>
           </div>
           
