@@ -93,6 +93,18 @@ USING (
   )
 );
 
+CREATE POLICY "Users can delete shares they own" ON public.list_shares
+    FOR DELETE USING (
+        EXISTS (
+            SELECT 1 FROM public.lists
+            WHERE lists.id = list_shares.list_id
+            AND lists.owner_id = auth.uid()
+        )
+    );
+
+-- Fix foreign key permission issue for inserting lists
+GRANT SELECT ON auth.users TO authenticated;
+
 -- Enable Realtime for all tables so clients can listen to changes
 alter publication supabase_realtime add table lists;
 alter publication supabase_realtime add table tasks;

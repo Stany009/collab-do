@@ -25,8 +25,6 @@ export default function LoginPage() {
           password,
         });
         if (error) throw error;
-        // If email confirmations are off, they might be logged in immediately.
-        // Let's redirect to dashboard just in case, or show an alert if they need to check email.
         router.push('/dashboard'); 
       } else {
         const { error } = await supabase.auth.signInWithPassword({
@@ -44,10 +42,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex-center animate-fade-in" style={{ minHeight: '100vh', padding: '2rem' }}>
-      <div className="glass-panel" style={{ padding: '3rem', width: '100%', maxWidth: '420px' }}>
+    <div className="flex-center" style={{ minHeight: '100vh', padding: '2rem' }}>
+      <div className="panel" style={{ padding: '3rem', width: '100%', maxWidth: '400px' }}>
         
-        <h2 style={{ textAlign: 'center', marginBottom: '2rem', color: 'var(--text-primary)' }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '1.5rem' }}>
           {isSignUp ? 'Create an Account' : 'Welcome Back'}
         </h2>
         
@@ -56,10 +54,9 @@ export default function LoginPage() {
             background: 'var(--danger)',
             color: 'white',
             padding: '1rem',
-            borderRadius: '12px',
+            borderRadius: '6px',
             marginBottom: '1.5rem',
             fontSize: '0.9rem',
-            fontWeight: '600'
           }}>
             {error}
           </div>
@@ -67,7 +64,7 @@ export default function LoginPage() {
 
         <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500', color: 'var(--text-secondary)' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>
               Email Address
             </label>
             <input
@@ -80,7 +77,7 @@ export default function LoginPage() {
             />
           </div>
           <div>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500', color: 'var(--text-secondary)' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>
               Password
             </label>
             <input
@@ -96,7 +93,7 @@ export default function LoginPage() {
             type="submit"
             disabled={loading}
             className="btn btn-primary"
-            style={{ marginTop: '0.5rem', padding: '1rem' }}
+            style={{ width: '100%' }}
           >
             {loading ? 'Processing...' : (isSignUp ? 'Sign Up' : 'Log In')}
           </button>
@@ -111,7 +108,6 @@ export default function LoginPage() {
             type="button"
             onClick={() => setIsSignUp(!isSignUp)}
             className="btn-ghost"
-            style={{ padding: '0.2rem 0.5rem' }}
           >
             {isSignUp ? 'Log In' : 'Sign Up'}
           </button>
