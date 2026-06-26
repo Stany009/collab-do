@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
-import { ListTodo, ArrowRight, Sparkles } from 'lucide-react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -15,14 +13,6 @@ export default function LoginPage() {
   const [isSignUp, setIsSignUp] = useState(false);
   const router = useRouter();
   const supabase = createClient();
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    gsap.fromTo('.login-anim',
-      { opacity: 0, y: 30, filter: 'blur(10px)' },
-      { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, stagger: 0.1, ease: 'power3.out' }
-    );
-  }, { scope: containerRef });
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,17 +21,11 @@ export default function LoginPage() {
 
     try {
       if (isSignUp) {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-        });
+        const { error } = await supabase.auth.signUp({ email, password });
         if (error) throw error;
-        router.push('/dashboard'); 
+        router.push('/dashboard');
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         router.push('/dashboard');
       }
@@ -53,24 +37,25 @@ export default function LoginPage() {
   };
 
   return (
-    <div ref={containerRef} className="flex-center" style={{ minHeight: '100vh', padding: '2rem', flexDirection: 'column' }}>
+    <div className="page-center" style={{ flexDirection: 'column', gap: '2rem' }}>
       
-      <div className="login-anim" style={{ marginBottom: '3rem', textAlign: 'center' }}>
-        <div className="flex-center" style={{ gap: '0.75rem', marginBottom: '1.5rem' }}>
-          <ListTodo size={40} color="var(--accent-color)" />
-          <h1 style={{ margin: 0, fontSize: '2.5rem', fontWeight: 700, letterSpacing: '-0.04em' }}>CollabDo</h1>
-        </div>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', maxWidth: '400px' }}>
-          The elite workspace for high-performance teams.
+      {/* Branding */}
+      <div className="anim-fade" style={{ textAlign: 'center' }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem' }}>
+          CollabDo
+        </h1>
+        <p style={{ color: 'var(--text-2)', fontSize: '0.95rem' }}>
+          Your workspace awaits
         </p>
       </div>
 
-      <div className="panel login-anim" style={{ padding: '3.5rem', width: '100%', maxWidth: '440px', borderRadius: '24px', boxShadow: 'var(--shadow-xl)' }}>
+      {/* Login Card */}
+      <div className="login-card anim-fade anim-stagger-1">
         
-        <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', fontSize: '1.75rem', fontWeight: 600, letterSpacing: '-0.02em' }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '1.75rem', fontSize: '1.35rem', fontWeight: 600 }}>
           {isSignUp ? (
             <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-              <Sparkles size={24} color="var(--accent-color)" /> Get Started
+              <Sparkles size={20} color="var(--accent)" /> Create Account
             </span>
           ) : (
             'Welcome Back'
@@ -78,37 +63,37 @@ export default function LoginPage() {
         </h2>
         
         {error && (
-          <div className="login-anim" style={{
-            background: 'var(--danger)',
-            color: 'white',
-            padding: '1rem',
-            borderRadius: '12px',
-            marginBottom: '1.5rem',
-            fontSize: '0.95rem',
+          <div className="anim-fade" style={{
+            background: 'rgba(239, 68, 68, 0.1)',
+            color: 'var(--danger)',
+            padding: '0.75rem 1rem',
+            borderRadius: '10px',
+            marginBottom: '1.25rem',
+            fontSize: '0.85rem',
             fontWeight: 500,
-            textAlign: 'center'
+            textAlign: 'center',
+            border: '1px solid rgba(239, 68, 68, 0.2)'
           }}>
             {error}
           </div>
         )}
 
-        <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
-          <div className="login-anim">
-            <label style={{ display: 'block', marginBottom: '0.75rem', fontSize: '0.95rem', fontWeight: '600', color: 'var(--text-secondary)' }}>
-              Email Address
+        <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <div>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-2)' }}>
+              Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="input-field"
+              className="input input-lg"
               placeholder="you@example.com"
-              style={{ padding: '1rem' }}
             />
           </div>
-          <div className="login-anim">
-            <label style={{ display: 'block', marginBottom: '0.75rem', fontSize: '0.95rem', fontWeight: '600', color: 'var(--text-secondary)' }}>
+          <div>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-2)' }}>
               Password
             </label>
             <input
@@ -116,34 +101,40 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="input-field"
+              className="input input-lg"
               placeholder="••••••••"
-              style={{ padding: '1rem' }}
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="btn btn-primary login-anim"
-            style={{ width: '100%', padding: '1rem', fontSize: '1.1rem', marginTop: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+            className="btn btn-primary"
+            style={{ width: '100%', padding: '0.75rem', fontSize: '0.95rem', marginTop: '0.5rem' }}
           >
-            {loading ? 'Processing...' : (isSignUp ? 'Create Workspace' : 'Enter Workspace')}
-            {!loading && <ArrowRight size={20} />}
+            {loading ? 'Processing...' : (isSignUp ? 'Create Account' : 'Sign In')}
+            {!loading && <ArrowRight size={18} />}
           </button>
         </form>
 
-        <div className="login-anim" style={{ textAlign: 'center', marginTop: '2.5rem', fontSize: '1rem' }}>
-          <span style={{ color: 'var(--text-secondary)' }}>
+        <div style={{ textAlign: 'center', marginTop: '1.75rem', fontSize: '0.9rem' }}>
+          <span style={{ color: 'var(--text-3)' }}>
             {isSignUp ? 'Already have an account?' : "Don't have an account?"}
           </span>
           {' '}
           <button
             type="button"
             onClick={() => setIsSignUp(!isSignUp)}
-            className="btn-ghost"
-            style={{ fontWeight: 600, color: 'var(--accent-color)' }}
+            style={{ 
+              fontWeight: 600, 
+              color: 'var(--accent)', 
+              background: 'none', 
+              border: 'none', 
+              cursor: 'pointer', 
+              fontFamily: 'inherit',
+              fontSize: 'inherit'
+            }}
           >
-            {isSignUp ? 'Log In' : 'Sign Up'}
+            {isSignUp ? 'Sign In' : 'Sign Up'}
           </button>
         </div>
       </div>
