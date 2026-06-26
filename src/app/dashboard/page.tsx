@@ -60,7 +60,7 @@ export default function DashboardPage() {
     setIsThemeOpen(false);
   };
 
-  // --- Data fetching (unchanged logic) ---
+  // --- Data fetching ---
   useEffect(() => {
     const checkUserAndFetchData = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -184,7 +184,7 @@ export default function DashboardPage() {
   if (!user) {
     return (
       <div className="page-center">
-        <div className="glass-panel" style={{ padding: '2rem' }}>
+        <div className="glass" style={{ padding: '2rem' }}>
           <p style={{ color: 'var(--text-2)' }}>Loading workspace...</p>
         </div>
       </div>
@@ -192,16 +192,16 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="app-shell">
+    <div className="container" style={{ padding: '2rem', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
-      {/* ═══ TOPBAR ═══ */}
-      <header className="topbar">
+      {/* Navbar */}
+      <nav className="navbar anim-fade">
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
           <ListTodo size={22} color="var(--accent)" />
-          <span style={{ fontWeight: 700, fontSize: '1.1rem', fontFamily: 'var(--font-playfair), Georgia, serif' }}>CollabDo</span>
+          <span style={{ fontWeight: 700, fontSize: '1.25rem', fontFamily: 'var(--font-playfair), Georgia, serif' }}>CollabDo</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
           
           {/* Theme Dropdown */}
           <div ref={themeRef} style={{ position: 'relative' }}>
@@ -231,64 +231,72 @@ export default function DashboardPage() {
               </div>
             )}
           </div>
-
-          <div style={{ width: '1px', height: '20px', background: 'var(--divider)' }} />
           
-          <span style={{ fontSize: '0.85rem', color: 'var(--text-2)', fontWeight: 500 }}>{user.email}</span>
+          <span style={{ fontSize: '0.85rem', color: 'var(--text-2)', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Users size={14} /> {user.email}
+          </span>
           
-          <button onClick={handleSignOut} className="btn-ghost" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: 'var(--danger)', fontSize: '0.85rem', fontWeight: 600, fontFamily: 'inherit', border: 'none', cursor: 'pointer', background: 'none' }}>
+          <button onClick={handleSignOut} className="btn-ghost" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: 'var(--danger)', fontSize: '0.85rem', fontWeight: 600, border: 'none', cursor: 'pointer' }}>
             <LogOut size={16} /> Exit
           </button>
         </div>
-      </header>
+      </nav>
 
-      {/* ═══ APP BODY ═══ */}
-      <div className="app-body">
+      {/* Hero Section */}
+      <div className="anim-fade anim-d1" style={{ textAlign: 'center', margin: '3rem 0 4rem' }}>
+        <h1 className="hero-text" style={{ marginBottom: '1rem' }}>
+          Welcome back
+        </h1>
+        <p style={{ color: 'var(--text-2)', fontSize: '1.25rem', maxWidth: '600px', margin: '0 auto' }}>
+          Organize your tasks, collaborate with your team, and get things done in style.
+        </p>
+      </div>
+
+      {/* Bento Grid Layout */}
+      <div className="bento-grid flex-1">
         
-        {/* ═══ SIDEBAR ═══ */}
-        <aside className="sidebar">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-3)' }}>
-              Workspaces
-            </span>
-            <button onClick={() => setIsCreatingList(!isCreatingList)} className="btn-ghost" style={{ padding: '0.3rem', borderRadius: '6px' }}>
-              <Plus size={16} />
+        {/* Left Column: Workspaces */}
+        <div className="glass anim-fade anim-d2" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%', minHeight: '400px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>Workspaces</h2>
+            <button onClick={() => setIsCreatingList(!isCreatingList)} className="btn-ghost" style={{ padding: '0.4rem', borderRadius: '8px' }}>
+              <Plus size={18} />
             </button>
           </div>
 
           {isCreatingList && (
-            <form onSubmit={createList} style={{ display: 'flex', gap: '0.35rem', marginBottom: '0.5rem' }}>
+            <form onSubmit={createList} style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
               <input
                 type="text"
                 autoFocus
                 value={newListName}
                 onChange={(e) => setNewListName(e.target.value)}
-                placeholder="New list..."
+                placeholder="New workspace..."
                 className="input"
-                style={{ fontSize: '0.85rem' }}
+                style={{ fontSize: '0.9rem' }}
               />
-              <button type="submit" className="btn btn-primary" style={{ padding: '0 0.6rem', fontSize: '0.85rem' }}>
-                <Plus size={14} />
+              <button type="submit" className="btn btn-primary" style={{ padding: '0 0.75rem' }}>
+                <Plus size={16} />
               </button>
             </form>
           )}
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', overflowY: 'auto', flex: 1, paddingRight: '0.5rem' }}>
             {lists.length === 0 && (
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-3)', padding: '1rem 0.5rem', textAlign: 'center' }}>
-                No workspaces yet
-              </p>
+              <div style={{ textAlign: 'center', padding: '2rem 1rem', color: 'var(--text-3)' }}>
+                <p style={{ fontSize: '0.9rem' }}>No workspaces found.</p>
+                <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>Create one to get started.</p>
+              </div>
             )}
             {lists.map(list => (
-              <div key={list.id} className="group" style={{ display: 'flex', alignItems: 'center' }}>
+              <div key={list.id} className="group" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                 <button
                   onClick={() => setActiveListId(list.id)}
                   className={`list-item ${activeListId === list.id ? 'active' : ''}`}
-                  style={{ flex: 1 }}
                 >
-                  <ListTodo size={16} className="list-item-icon" />
+                  <ListTodo size={16} />
                   <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>{list.title}</span>
-                  {list.owner_id !== user.id && <Users size={12} style={{ opacity: 0.5, flexShrink: 0 }} />}
+                  {list.owner_id !== user.id && <Users size={12} style={{ opacity: 0.5 }} />}
                 </button>
                 {list.owner_id === user.id && (
                   <button onClick={() => deleteList(list.id)} className="btn-danger-ghost" title="Delete">
@@ -298,20 +306,19 @@ export default function DashboardPage() {
               </div>
             ))}
           </div>
-        </aside>
+        </div>
 
-        {/* ═══ MAIN CONTENT ═══ */}
-        <main className="main-content">
+        {/* Right Column: Tasks */}
+        <div className="glass anim-fade anim-d3" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', height: '100%', minHeight: '500px' }}>
           {activeListId && activeList ? (
-            <div style={{ maxWidth: '720px' }}>
-              
+            <>
               {/* List Header */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '2rem', paddingBottom: '1.5rem', borderBottom: '1px solid var(--surface-border)' }}>
                 <div>
-                  <h1 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '0.25rem' }}>
+                  <h1 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem' }}>
                     {activeList.title}
                   </h1>
-                  <p style={{ color: 'var(--text-3)', fontSize: '0.85rem' }}>
+                  <p style={{ color: 'var(--text-3)', fontSize: '0.95rem' }}>
                     {tasks.length} tasks · {completedCount} completed
                   </p>
                 </div>
@@ -319,9 +326,9 @@ export default function DashboardPage() {
                   <button
                     onClick={() => setIsShareModalOpen(!isShareModalOpen)}
                     className="btn btn-ghost"
-                    style={{ border: '1px solid var(--surface-border)', gap: '0.4rem', fontSize: '0.85rem' }}
+                    style={{ border: '1px solid var(--surface-border)', gap: '0.5rem', fontSize: '0.9rem' }}
                   >
-                    <Share2 size={16} /> {isShareModalOpen ? 'Hide' : 'Share'}
+                    <Share2 size={16} /> {isShareModalOpen ? 'Hide Sharing' : 'Share'}
                   </button>
                 )}
               </div>
@@ -329,59 +336,58 @@ export default function DashboardPage() {
               {/* Share Panel */}
               {isShareModalOpen && isOwner && (
                 <div className="share-panel">
-                  <h3 style={{ fontSize: '0.9rem', fontWeight: 600, marginBottom: '0.75rem', fontFamily: 'var(--font-inter), sans-serif' }}>Invite</h3>
-                  <form onSubmit={handleShareList} style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem', fontFamily: 'var(--font-inter), sans-serif' }}>Invite Collaborators</h3>
+                  <form onSubmit={handleShareList} style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem' }}>
                     <input
                       type="email"
                       required
                       value={shareEmail}
                       onChange={(e) => setShareEmail(e.target.value)}
-                      placeholder="email@example.com"
+                      placeholder="colleague@example.com"
                       className="input"
                     />
                     <button type="submit" className="btn btn-primary" style={{ flexShrink: 0 }}>
-                      <Share2 size={14} /> Send
+                      <Share2 size={16} /> Send Invite
                     </button>
                   </form>
                   
-                  {sharedUsers.length > 0 && (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                      {sharedUsers.map(share => (
-                        <div key={share.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem 0.65rem', background: 'var(--surface-hover)', borderRadius: '8px', fontSize: '0.85rem' }}>
-                          <span style={{ fontWeight: 500 }}>{share.shared_with_email}</span>
-                          <button onClick={() => handleRemoveShare(share.id)} className="btn-ghost" style={{ color: 'var(--danger)', padding: '0.2rem' }}>
-                            <Trash2 size={14} />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  {sharedUsers.length === 0 && (
-                    <p style={{ color: 'var(--text-3)', fontSize: '0.8rem' }}>No collaborators yet</p>
-                  )}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-3)', marginBottom: '0.25rem' }}>Current Collaborators</h4>
+                    {sharedUsers.length > 0 ? sharedUsers.map(share => (
+                      <div key={share.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 1rem', background: 'var(--surface-hover)', borderRadius: '10px', fontSize: '0.9rem' }}>
+                        <span style={{ fontWeight: 500 }}>{share.shared_with_email}</span>
+                        <button onClick={() => handleRemoveShare(share.id)} className="btn-ghost" style={{ color: 'var(--danger)', padding: '0.3rem' }}>
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    )) : (
+                      <p style={{ color: 'var(--text-3)', fontSize: '0.9rem', fontStyle: 'italic' }}>Only you have access right now.</p>
+                    )}
+                  </div>
                 </div>
               )}
 
               {/* Task Input */}
-              <form onSubmit={addTask} style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+              <form onSubmit={addTask} style={{ display: 'flex', gap: '0.75rem', marginBottom: '2rem' }}>
                 <input
                   type="text"
                   value={newTaskText}
                   onChange={(e) => setNewTaskText(e.target.value)}
-                  placeholder="Add a task..."
+                  placeholder="What needs to be done?"
                   className="input input-lg"
                 />
-                <button type="submit" className="btn btn-primary" style={{ padding: '0 1.25rem' }}>
-                  <Plus size={20} />
+                <button type="submit" className="btn btn-primary" style={{ padding: '0 1.5rem' }}>
+                  <Plus size={24} />
                 </button>
               </form>
 
-              {/* Tasks */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {/* Tasks List */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', overflowY: 'auto', paddingRight: '0.5rem', flex: 1 }}>
                 {tasks.length === 0 && (
-                  <div className="glass-panel" style={{ padding: '3rem 2rem', textAlign: 'center', color: 'var(--text-3)' }}>
-                    <Circle size={32} style={{ margin: '0 auto 1rem', opacity: 0.3 }} />
-                    <p style={{ fontSize: '0.95rem' }}>No tasks yet. Add one above!</p>
+                  <div style={{ padding: '4rem 2rem', textAlign: 'center', color: 'var(--text-3)' }}>
+                    <Circle size={48} style={{ margin: '0 auto 1.5rem', opacity: 0.2 }} />
+                    <p style={{ fontSize: '1.1rem', fontWeight: 500 }}>This workspace is empty</p>
+                    <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Add your first task above to get started.</p>
                   </div>
                 )}
                 {tasks.map((task) => (
@@ -389,9 +395,8 @@ export default function DashboardPage() {
                     <button
                       onClick={() => toggleTask(task.id, task.completed)}
                       className={`task-check ${task.completed ? 'checked' : ''}`}
-                      style={{ background: 'none', border: 'none' }}
                     >
-                      {task.completed ? <CheckCircle2 size={22} /> : <Circle size={22} />}
+                      {task.completed ? <CheckCircle2 size={24} /> : <Circle size={24} />}
                     </button>
                     <span className={`task-label ${task.completed ? 'done' : ''}`}>
                       {task.text}
@@ -401,21 +406,20 @@ export default function DashboardPage() {
                       className="btn-danger-ghost"
                       title="Delete"
                     >
-                      <Trash2 size={16} />
+                      <Trash2 size={18} />
                     </button>
                   </div>
                 ))}
               </div>
-            </div>
+            </>
           ) : (
-            <div className="page-center" style={{ minHeight: 'calc(100vh - 60px)' }}>
-              <div style={{ textAlign: 'center', color: 'var(--text-3)' }}>
-                <ListTodo size={40} style={{ margin: '0 auto 1rem', opacity: 0.3 }} />
-                <p style={{ fontSize: '1rem', fontWeight: 500 }}>Select or create a workspace</p>
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--text-3)' }}>
+              <ListTodo size={64} style={{ marginBottom: '1.5rem', opacity: 0.2 }} />
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--text-2)', marginBottom: '0.5rem' }}>No Workspace Selected</h2>
+              <p style={{ fontSize: '1rem' }}>Choose a workspace from the sidebar or create a new one.</p>
             </div>
           )}
-        </main>
+        </div>
       </div>
     </div>
   );
